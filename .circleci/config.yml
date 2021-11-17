@@ -1,26 +1,82 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/2.0/configuration-reference
-version: 2.1
+Link : https://www.youtube.com/watch?v=SjF8NMaA1Dk
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
-jobs:
-  say-hello:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
-    docker:
-      - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
-    steps:
-      - checkout
-      - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+alternatif = ["Kota A,Kota B,Kota C,Kota D,Kota E"]
+kriteria = ["Kisaran harga,Customer Service,Support System,Pilihan pembayaran, Jumlah Server"]
+costbenefit = ["cost,benefit,benefit,benefit,benefit"]
+kepentingan = [0.18,0.3,0.18,0.11,0.23]
 
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
-workflows:
-  say-hello-workflow:
-    jobs:
-      - say-hello
+alternatifkriteria = [
+    [5,4,10.0,4,120],
+    [4,4,5.0,4,87],
+    [5,5,7.5,3,67],
+    [4,4,4.0,5,98],
+    [3,3,25.0,4,100]
+]
+
+print(str(alternatif))
+print(str(kriteria))
+print(str(costbenefit))
+print(str(kepentingan))
+print(str(alternatifkriteria))
+
+pembagi=[]
+for i in range (len(kriteria)):
+    pembagi.append(0)
+    for j in range (len(alternatif)):
+         if costbenefit[i] == 'cost':
+            if j == 0:
+                pembagi [i] = alternatifkriteria[j][i]
+            else :
+                if pembagi [i] < alternatifkriteria[j][i]:
+                    pembagi [i] = alternatifkriteria [j][i]
+    else : #if costbenefit[i] == 'benefit':
+        if j == 0:
+            pembagi [i] = alternatifkriteria [j][i]
+        else :
+            if pembagi [i] < alternatifkriteria [j][i]:
+                pembagi [i] = alternatifkriteria [j][i]i]:
+            pembagi [i] = alternatifkriteria [j][i]
+			
+print(str(pembagi))
+
+normalisai = []
+
+for i in range (len(alternatif)):
+    normalisai.append([])
+    for j in range (len(kriteria)):
+        normalisai[i].append(0)
+        if costbenefit[j] == 'cost':
+            normalisai [i][j] = pembagi [j] / alternatifkriteria[i][j]
+            else : #if costbenefit[j] == 'benefit':
+                normalisai [i][j] = alternatifkriteria [i] /pembagi[j]
+				
+print(str(normalisai))
+
+hasil = []
+
+for i in range (len(alternatif)):
+    hasil.append(0)
+    for j in range (len(kriteria)):
+        hasil[i] = hasil[i]+ (normalisai[i][j]*kepentingan[j])
+		
+print(str(hasil))
+
+alternatifrangking=[]
+hasilrangking=[]
+
+for i in range(len(alternatif)):
+    hasilrangking.append(hasil[i])
+    alternatifrangking.append(alternatif[i])
+	
+for i in range(len(alternatif)):
+    for j in range(len(alternatif)):
+        if j > i :
+            if hasilrangking[j]> hasilrangking [i]:
+            tmphasil = hasilrangking [i]
+			tmpalternatif = alternatifrangking [i]
+			hasilrangking[i] = alternatifrangking [j] 
+			hasilrangking [j] = tmphasil
+			alternatifrangking[j] = tmpalternatif
+			
+print(str(alternatifrangking))	
+print(str(hasilrangking))		
